@@ -11,3 +11,11 @@ CREATE TABLE t_user(
 
 command line中输入：mybatis-generator:generate -e
 然后点击运行即可，自动生成实体类、mapper、xml文件。
+
+jjwt json web token 完善 实现token的原因。token传递的方式。
+token原因：
+主要用于客户端，不支持session的时候。
+ 支持跨域，对于前后端分离天然的亲和力
+两种方式用：
+在请求地址中添加token服务器拦截其请求
+放在Http头中自定义属性
