@@ -1,11 +1,19 @@
 package com.hjc.demo;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
+/**
+ * @MapperScan("com.hjc.demo.mapper") 将项目中对应的mapper类的路径加进来就可以了
+ *
+ * @author Hjc
+ * @date 2018-05-31 16:42:50
+ */
 @SpringBootApplication
+@MapperScan("com.hjc.demo.mapper")
 public class DemoApplication extends SpringBootServletInitializer{
 
 	public static void main(String[] args) {

@@ -1,0 +1,13 @@
+sql语句，mybatis-generator嵌入idea说明
+
+CREATE TABLE t_user(
+  user_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  user_name VARCHAR(255) NOT NULL ,
+  password VARCHAR(255) NOT NULL ,
+  phone VARCHAR(255) NOT NULL
+) ENGINE=INNODB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8;
+
+配置maven运行，自动生成mapper，xml：
+
+command line中输入：mybatis-generator:generate -e
+然后点击运行即可，自动生成实体类、mapper、xml文件。
