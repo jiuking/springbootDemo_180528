@@ -24,4 +24,15 @@ public class DemoApplication extends SpringBootServletInitializer{
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return builder.sources(DemoApplication.class);
 	}
+
+	/*@Bean
+	public FilterRegistrationBean jwtFilter() {
+		FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+		filterRegistrationBean.setFilter(new JwtFilter());
+		List<String> urlPatterns = new ArrayList<>();
+		urlPatterns.add("/helloWorld");
+		//添加需要拦截的url
+		filterRegistrationBean.addUrlPatterns(urlPatterns.toArray(new String[urlPatterns.size()]));
+		return filterRegistrationBean;
+	}*/
 }

@@ -37,4 +37,9 @@ public class HelloWorldController {
     public String hellWorldByService() {
         return helloWorldService.helloWorld();
     }
+
+    @RequestMapping("welcome/test")
+    public String welcomeTest() {
+        return "test";
+    }
 }
