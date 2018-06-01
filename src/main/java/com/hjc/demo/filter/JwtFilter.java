@@ -62,7 +62,9 @@ public class JwtFilter implements Filter {
             filterChain.doFilter(servletRequest,servletResponse);
         }else {
             if (authHeader == null || !authHeader.startsWith("bearer;")) {
-                //未登录跳转到login页面。
+                //未登录跳转到logi
+                //
+                // n页面。
                 response.sendRedirect("/login");
                 return;
             }
