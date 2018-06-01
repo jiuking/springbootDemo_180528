@@ -12,7 +12,7 @@ import java.io.IOException;
  * @date : 2018/6/1 0001 17:33
  * @description : loginFilter 跳转
  */
-@WebFilter(urlPatterns = {"/login"})
+/*@WebFilter(urlPatterns = {"/login"})*/
 public class LoginFilter implements Filter {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginFilter.class);

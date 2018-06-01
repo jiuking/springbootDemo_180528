@@ -48,6 +48,14 @@ public class JwtFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
+        logger.info("jwt token filter 过滤 start");
+
+        String servletPath = req.getServletPath();
+        if (servletPath.equals("/login")) {
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
+
         String authHeader = req.getHeader("authorization");
         if ("OPTIONS".equals(req.getMethod())) {
             response.setStatus(HttpServletResponse.SC_OK);
@@ -56,7 +64,7 @@ public class JwtFilter implements Filter {
             if (authHeader == null || !authHeader.startsWith("bearer;")) {
                 //未登录跳转到login页面。
                 response.sendRedirect("/login");
-                filterChain.doFilter(servletRequest,servletResponse);
+                return;
             }
             final String token = authHeader.substring(7);
             try {
@@ -66,7 +74,7 @@ public class JwtFilter implements Filter {
                 }
                 final Claims claims = JwtHelper.parseJWT(token, audience.getBase64Secret());
                 if (claims == null) {
-                    response.sendRedirect("/welcome");
+                    response.sendRedirect("/login");
                     return;
                 }
                 req.setAttribute(Constants.CLAIMS, claims);
@@ -75,7 +83,7 @@ public class JwtFilter implements Filter {
             }
             filterChain.doFilter(servletRequest,servletResponse);
         }
-        logger.info("jwt token filter 过滤");
+        logger.info("jwt token filter 过滤 end");
     }
 
     @Override
