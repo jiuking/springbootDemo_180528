@@ -109,6 +109,14 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- 测试需要框架end -->
+
+		<!-- 属性提示start -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<!-- 属性提示end -->
 		<!--<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
