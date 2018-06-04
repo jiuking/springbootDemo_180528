@@ -1,6 +1,7 @@
 package com.hjc.demo.controller;
 
 import com.hjc.demo.entity.Audience;
+import com.hjc.demo.service.HelloWorldService;
 import com.hjc.demo.util.JwtHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,10 +27,11 @@ public class LoginController {
                 "",
                 audience.getClientId(),
                 audience.getName(),
-                audience.getExpiresSecond()*1000,
+                audience.getExpiresSecond() * 1000,
                 audience.getBase64Secret());
         String token = "bearer;" + jwtToken;
-        response.setHeader("authorization",token);
+        response.setHeader("authorization", token);
         return "login";
     }
+
 }

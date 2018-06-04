@@ -8,4 +8,15 @@ package com.hjc.demo.service;
 public interface HelloWorldService {
 
     String helloWorld();
+
+    /**
+     * 添加用户
+     * @return 返回添加状态
+     */
+    int addUser();
+
+    /**
+     * 查询用户
+     */
+    void queryUser(Integer integer);
 }

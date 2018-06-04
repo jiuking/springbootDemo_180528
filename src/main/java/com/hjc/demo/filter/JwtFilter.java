@@ -22,7 +22,7 @@ import java.io.IOException;
  * @date : 2018/6/1 0001 15:28
  * @description : Jwt Filter过滤请求路径
  */
-@WebFilter(urlPatterns = {"/*"})
+//@WebFilter(urlPatterns = {"/*"})
 public class JwtFilter implements Filter {
 
     @Autowired

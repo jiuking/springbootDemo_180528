@@ -5,6 +5,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * @MapperScan("com.hjc.demo.mapper") 将项目中对应的mapper类的路径加进来就可以了
@@ -12,7 +15,9 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
  * @author Hjc
  * @date 2018-05-31 16:42:50
  */
+@EnableTransactionManagement
 @SpringBootApplication
+//@EnableAspectJAutoProxy(exposeProxy = true)
 @MapperScan("com.hjc.demo.mapper")
 public class DemoApplication extends SpringBootServletInitializer{
 
@@ -23,6 +28,12 @@ public class DemoApplication extends SpringBootServletInitializer{
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return builder.sources(DemoApplication.class);
+	}
+
+	@Bean
+	public Object testBean(PlatformTransactionManager platformTransactionManager){
+		System.out.println(">>>>>>>>>>" + platformTransactionManager.getClass().getName());
+		return new Object();
 	}
 
 	/*@Bean

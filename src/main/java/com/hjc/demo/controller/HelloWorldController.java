@@ -42,4 +42,10 @@ public class HelloWorldController {
     public String welcomeTest() {
         return "test";
     }
+
+    @RequestMapping("/transaction")
+    public String transaction() {
+        helloWorldService.addUser();
+        return "asd";
+    }
 }
