@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -17,7 +18,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @EnableTransactionManagement
 @SpringBootApplication
-//@EnableAspectJAutoProxy(exposeProxy = true)
+//@EnableAspectJAutoProxy(proxyTargetClass = true,exposeProxy = true)//配置代理为cglib代理，默认使用 的是jdk动态代理
 @MapperScan("com.hjc.demo.mapper")
 public class DemoApplication extends SpringBootServletInitializer{
 
