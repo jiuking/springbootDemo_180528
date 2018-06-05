@@ -1,5 +1,9 @@
 package com.hjc.demo.entity;
 
+/**
+ * @author Hjc
+ * @date 2018-06-05 10:33:00
+ */
 public class User {
     /**
      *

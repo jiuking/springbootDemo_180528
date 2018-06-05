@@ -20,7 +20,7 @@ public class SchedulingConfig {
 
     @Scheduled(cron = "0/20 * * * * ?")
     public void scheduled() {
-        logger.info("----->定时任务<-----");
+        logger.info("----->定时任务20s执行一次<-----");
     }
 
 }

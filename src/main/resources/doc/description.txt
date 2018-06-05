@@ -19,3 +19,9 @@ token原因：
 两种方式用：
 在请求地址中添加token服务器拦截其请求
 放在Http头中自定义属性
+
+CREATE TABLE `scheduler_cron_config` (
+  `id` varchar(32) NOT NULL,
+  `cron` varchar(40) DEFAULT NULL COMMENT '表达式',
+  `desc` varchar(255) DEFAULT NULL COMMENT '描述'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
