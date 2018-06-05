@@ -16,7 +16,7 @@ import javax.annotation.Resource;
 /**
  * @author : Hjc
  * @date : 2018/6/5 0005 11:18
- * @description : 定时查库，并更新任务
+ * @description : 定时查库，并更新任务执行时间
  */
 @Configuration
 @EnableScheduling
