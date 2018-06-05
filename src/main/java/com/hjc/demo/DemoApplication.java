@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * @MapperScan("com.hjc.demo.mapper") 将项目中对应的mapper类的路径加进来就可以了
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @EnableTransactionManagement
 @SpringBootApplication
+@EnableSwagger2
 //@EnableAspectJAutoProxy(proxyTargetClass = true,exposeProxy = true)//配置代理为cglib代理，默认使用 的是jdk动态代理
 @MapperScan("com.hjc.demo.mapper")
 public class DemoApplication extends SpringBootServletInitializer{
