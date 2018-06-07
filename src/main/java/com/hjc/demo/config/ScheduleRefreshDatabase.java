@@ -18,9 +18,9 @@ import javax.annotation.Resource;
  * @date : 2018/6/5 0005 11:18
  * @description : 定时查库，并更新任务执行时间
  */
-@Configuration
-@EnableScheduling
-@Component
+//@Configuration
+//@EnableScheduling
+//@Component
 public class ScheduleRefreshDatabase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ScheduleRefreshDatabase.class);

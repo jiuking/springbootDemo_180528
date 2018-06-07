@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
  * @description : 定时任务
  */
 @Configuration
-@EnableScheduling
+//@EnableScheduling 不用此注解 也可行
 public class ScheduleTask {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ScheduleTask.class);

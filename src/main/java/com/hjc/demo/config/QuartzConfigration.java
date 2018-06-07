@@ -13,7 +13,7 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
  * @date : 2018/6/5 0005 10:39
  * @description : quartz配置类
  */
-@Configuration
+//@Configuration
 public class QuartzConfigration {
 
     @Bean("jobDetail")

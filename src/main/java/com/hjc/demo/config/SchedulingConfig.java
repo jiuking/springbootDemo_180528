@@ -13,7 +13,7 @@ import org.springframework.scheduling.annotation.Scheduled;
  * @date 2018-06-02 16:59:00
  */
 @Configuration
-@EnableScheduling//启动定时任务
+//@EnableScheduling//启动定时任务
 public class SchedulingConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(SchedulingConfig.class);
