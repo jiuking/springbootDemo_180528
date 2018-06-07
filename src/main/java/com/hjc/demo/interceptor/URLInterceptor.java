@@ -1,5 +1,6 @@
 package com.hjc.demo.interceptor;
 
+import com.hjc.demo.common.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -36,7 +37,10 @@ public class URLInterceptor implements HandlerInterceptor {
         if (newIp == null || newIp.length() == 0 || "unknown".equalsIgnoreCase(newIp)) {
             newIp = request.getRemoteAddr();
         }
-        System.out.println("newIp地址" + ip + newIp);
+        LOGGER.info("ip地址{},{}" + ip + newIp);
+        if (request.getAttribute(Constants.REQ_ATTR_IP) == null) {
+            request.setAttribute(Constants.REQ_ATTR_IP, ip);
+        }
         return true;
     }
 }

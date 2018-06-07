@@ -7,4 +7,6 @@ package com.hjc.demo.common;
  */
 public class Constants {
     public static String CLAIMS = "loginToken";
+
+    public static final String REQ_ATTR_IP = "ip";
 }
