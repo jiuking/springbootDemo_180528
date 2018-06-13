@@ -1,9 +1,13 @@
 package com.hjc.demo.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author : Administrator
@@ -14,8 +18,13 @@ import javax.servlet.http.HttpServletRequest;
 public class IpController {
 
     @RequestMapping("getIp")
-    public String getIp(HttpServletRequest request) {
+    public Map getIp(HttpServletRequest request) {
         String ip = (String) request.getAttribute("ip");
-        return ip;
+        String os = request.getHeader("user-agent");
+        System.out.println(os);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("os", os);
+        map.put("ip", ip);
+        return map;
     }
 }
