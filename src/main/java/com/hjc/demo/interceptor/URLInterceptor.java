@@ -37,9 +37,9 @@ public class URLInterceptor implements HandlerInterceptor {
         if (newIp == null || newIp.length() == 0 || "unknown".equalsIgnoreCase(newIp)) {
             newIp = request.getRemoteAddr();
         }
-        LOGGER.info("ip地址{},{}" + ip + newIp);
+        LOGGER.info("ip地址{},{}" , ip , newIp);
         if (request.getAttribute(Constants.REQ_ATTR_IP) == null) {
-            request.setAttribute(Constants.REQ_ATTR_IP, ip);
+            request.setAttribute(Constants.REQ_ATTR_IP, newIp);
         }
         return true;
     }
