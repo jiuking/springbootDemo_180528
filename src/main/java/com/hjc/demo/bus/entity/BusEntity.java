@@ -1,13 +1,18 @@
-package com.hjc.demo.bus;
+package com.hjc.demo.bus.entity;
+
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 /**
- * @author : Administrator
+ * @author : Hjc
  * @date : 2018/7/31 0031 16:55
  * @description : 页面展示信息实体类
  */
-public class entity {
+@Getter
+@Setter
+public class BusEntity {
 
     /**
      * 始发站
@@ -24,6 +29,8 @@ public class entity {
      */
     private List<Node> busStands;
 
+    @Getter
+    @Setter
     public class Node {
         /**
          * 具体站点编号

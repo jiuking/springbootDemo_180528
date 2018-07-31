@@ -1,6 +1,9 @@
 package com.hjc.demo.bus.service;
 
+import com.hjc.demo.bus.entity.BusEntity;
+
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author : Hjc
@@ -14,5 +17,5 @@ public interface BusCurrentInfoService {
      * @param lineType
      * @return
      */
-    String getBusCurrentInfo(String busNo, String lineType) throws IOException;
+    List<BusEntity> getBusCurrentInfo(String busNo, String lineType) throws IOException;
 }
