@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/webjars/bootstrap/4.1.0/css/bootstrap.css}"/>
+    <!--<script th:href="@{~/js/jquery.min.js}"/>-->
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/jquery.form.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <div class="col-xs-12 col-md-4 col-center-block">
+        <form class="form-horizontal" id="busForm">
+            <fieldset>
+                <div id="legend" class="">
+                    <legend class="">公交路线</legend>
+                </div>
+                <div class="form-group">
+                    <label id="busNo" class="col-sm-4 control-label" for="busNo">公交路线：</label>
+                    <input type="text" name="busNo" placeholder="公交路线" class="col-sm-6 input-xlarge"/>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">方向：</label>
+                    <select name="lineType" class="col-sm-6 input-xlarge">
+                        <option value="1">正向</option>
+                        <option value="2">反向</option>
+                        <option value="3">循环</option>
+                    </select>
+                </div>
+                <div class="btn-group float-lg-right col-sm-offset-2">
+                    <button type="button" id="query" class="btn btn-success">查询</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div id="content">
+
+    </div>
+</div>
+
+</body>
+<script type="text/javascript">
+    $("#query").on("click",function() {
+        $('#busForm').ajaxSubmit(      //ajax方式提交表单
+            {
+                url: 'concrete',
+                type: 'post',
+                success: function (data) {
+                    console.log(data)
+                    $('#content').html(data);
+                },
+            });
+    });
+</script>
+</html>

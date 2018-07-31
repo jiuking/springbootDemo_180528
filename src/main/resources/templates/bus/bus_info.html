@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>公交实时详情信息</title>
+</head>
+<body>
+<h1 th:text="${busInfo}">路公交实时详情信息！</h1>
+<div class="">
+    <table class="table table-hover">
+        <tr>
+            <th>公交站点</th>
+            <th>编号</th>
+        </tr>
+        <tr th:each="busInfo : ${busInfo}">
+            <td th:text="${user.id}">0</td>
+            <td th:text="${user.name}">zhansan</td>
+            <td th:text="${user.birthday}">1988-06-01</td>
+            <td th:text="${user.salary}">12345</td>
+        </tr>
+    </table>
+</div>
+<div class="">
+<table class="table table-hover">
+    <tr>
+        <th>公交站点</th>
+        <th>编号</th>
+        <th>当前站点</th>
+        <th>是否到达该站</th>
+    </tr>
+    <tr th:each="busInfo : ${busInfo}">
+        <td th:text="${user.id}">0</td>
+        <td th:text="${user.name}">zhansan</td>
+        <td th:text="${user.birthday}">1988-06-01</td>
+        <td th:text="${user.salary}">12345</td>
+    </tr>
+</table>
+</div>
+</body>
+</html>

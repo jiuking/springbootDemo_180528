@@ -1,5 +1,8 @@
 package com.hjc.demo.bus.service.impl;
 
+import com.google.common.base.Splitter;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 import com.hjc.demo.bus.service.BusCurrentInfoService;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -16,6 +19,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author : Administrator
@@ -35,9 +41,9 @@ public class BusCurrentInfoServiceImpl implements BusCurrentInfoService {
         StringBuilder resultMsg_temp = new StringBuilder();
         url.append("http://m.basbus.cn/ssgj/m_search?").append("id=").append(busNo).append("&linetype=").append(lineType);
         logger.info("url:"+url.toString());
-        CloseableHttpClient httpCilent = HttpClients.createDefault();
+        CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpGet httpGet = new HttpGet(url.toString());
-        CloseableHttpResponse response = httpCilent.execute(httpGet);
+        CloseableHttpResponse response = httpClient.execute(httpGet);
         HttpEntity entity = response.getEntity();
         String result = null;
         if (entity != null) {
@@ -46,12 +52,25 @@ public class BusCurrentInfoServiceImpl implements BusCurrentInfoService {
             response.close();
         }
         Document doc = Jsoup.parse(result);
+        Elements allLine = doc.select("div.buslineinfo");
+        String allBusLine = allLine != null && allLine.size() > 0 ? allLine.get(0).text() : "";
+        List<String> list = Lists.newArrayList(Splitter.on(" ").split(allBusLine));
+        System.out.println("list:"+list);
         Elements elements = doc.select("img");
         for (Element el : elements) {
             Element parent = el.parent().parent();
             logger.info(parent.text());
-            resultMsg_temp.append("\r\n").append(parent.text());
+            //到达该站点
+            logger.info(el.attr("class"));
+            if (!"inn".equals(el.attr("class"))){
+                resultMsg_temp.append("刚过该站点---");
+            }else{
+                //过了该站点
+                resultMsg_temp.append("到达该站点---");
+            }
+            resultMsg_temp.append(parent.text()).append(" ");
         }
+        System.out.println(resultMsg_temp.toString());
         Element startStand = doc.selectFirst("div.left");
         if (startStand == null) {
             logger.info("查询不到该路线");
@@ -59,7 +78,11 @@ public class BusCurrentInfoServiceImpl implements BusCurrentInfoService {
         }
         Element endStand = doc.selectFirst("div.right");
         logger.info(startStand.text() + "--->" + endStand.text());
-        resultMsg_.append(startStand.text()).append("---->").append(endStand.text()).append(resultMsg_temp);
+        resultMsg_.append(startStand.text()).append("---->").append(endStand.text()).append("\r\n").append(resultMsg_temp).append("=======").append(allBusLine);
         return resultMsg_.toString();
+    }
+
+    public static void main(String[] args) throws IOException {
+        System.out.println(new BusCurrentInfoServiceImpl().getBusCurrentInfo("141","1"));
     }
 }
