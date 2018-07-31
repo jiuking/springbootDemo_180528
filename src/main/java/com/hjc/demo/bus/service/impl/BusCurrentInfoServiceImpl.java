@@ -20,10 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author : Administrator
@@ -38,9 +35,9 @@ public class BusCurrentInfoServiceImpl implements BusCurrentInfoService {
     private static final String URL = "http://m.basbus.cn/ssgj/m_search?";
 
     @Override
-    public List<BusEntity> getBusCurrentInfo(String busNo, String lineType) throws IOException {
+    public BusEntity getBusCurrentInfo(String busNo, String lineType) throws IOException {
 
-        List<BusEntity> resultBus = new ArrayList<>();
+        BusEntity resultBus = new BusEntity();
 
         StringBuilder url = new StringBuilder();
         StringBuilder resultMsg_ = new StringBuilder();
@@ -51,32 +48,24 @@ public class BusCurrentInfoServiceImpl implements BusCurrentInfoService {
 
         Document doc = getBusPageInof(url.toString());
 
-        getAllBusStand(doc,resultBus);
-
-        Elements elements = doc.select("img");
-        for (Element el : elements) {
-            Element parent = el.parent().parent();
-            logger.info(parent.text());
-            //到达该站点
-            logger.info(el.attr("class"));
-            if (!"inn".equals(el.attr("class"))){
-                resultMsg_temp.append("刚过该站点---");
-            }else{
-                //过了该站点
-                resultMsg_temp.append("到达该站点---");
-            }
-            resultMsg_temp.append(parent.text()).append(" ");
-        }
-        System.out.println(resultMsg_temp.toString());
         Element startStand = doc.selectFirst("div.left");
         if (startStand == null) {
             logger.info("查询不到该路线");
             return null;//"查询不到该路线";
         }
+        //获取所有站点
+        getAllBusStand(doc,resultBus);
+        // 获取到达站点
+        getCurrentBusStand(doc, resultBus);
+
         Element endStand = doc.selectFirst("div.right");
+
         logger.info(startStand.text() + "--->" + endStand.text());
-        resultMsg_.append(startStand.text()).append("---->").append(endStand.text()).append("\r\n").append(resultMsg_temp).append("=======").append("");
-        return resultBus;//resultMsg_.toString();
+
+        resultBus.setStartStand(startStand.text());
+        resultBus.setEndStand(endStand.text());
+
+        return resultBus;
     }
 
     /**
@@ -99,26 +88,71 @@ public class BusCurrentInfoServiceImpl implements BusCurrentInfoService {
     /**
      * 获取所有的该公交路线站点信息
      */
-    private void getAllBusStand(Document doc, List<BusEntity> resultBus) {
+    private void getAllBusStand(Document doc, BusEntity resultBus) {
         Elements allLine = doc.select("div.buslineinfo");
         String allBusLine = allLine != null && allLine.size() > 0 ? allLine.get(0).text() : "";
         List<String> list = Lists.newArrayList(Splitter.on(" ").split(allBusLine));
         System.out.println("list:"+list);
-        for (int i = 0; i < allBusLine.length() - 2; i++) {
+        String resltMsg = "";
+        BusEntity busEntity = new BusEntity();
+        List nodeList = new ArrayList();
+        for (int i = 0; i < allBusLine.length() - 1;) {
             BusEntity.Node busEntityNode = new BusEntity().new Node();
-            busEntityNode.setNodeName(list.get(i));
+            if (list.get(i).contains("辆")){
+                i++;
+                resltMsg = list.get(i);
+                continue;
+            }
+            busEntityNode.setNodeName(list.get(i) + resltMsg);
             busEntityNode.setId(list.get(i+1));
+            resltMsg = "";
+            i+=2;
+            nodeList.add(busEntityNode);
         }
+        busEntity.setBusStands(nodeList);
     }
 
     /**
      * 获取该公交路线运行当前的到达站点信息
      */
-    private void getCurrentBusStand() {
-
+    private void getCurrentBusStand(Document doc,BusEntity resultBus) {
+        String resultMsg_temp;
+        Elements elements = doc.select("img");
+        for (Element el : elements) {
+            Element parent = el.parent().parent();
+            logger.info(parent.text());
+            //到达该站点
+            logger.info(el.attr("class"));
+            if (!"inn".equals(el.attr("class"))){
+                resultMsg_temp= "刚过该站点";
+            }else{
+                //过了该站点
+                resultMsg_temp = "到达该站点";
+            }
+            for (BusEntity.Node nodes : resultBus.getBusStands()) {
+                if (nodes.getNodeName().contains(parent.text())){
+                    nodes.setMsg(resultMsg_temp);
+                }
+            }
+        }
     }
 
     public static void main(String[] args) throws IOException {
-        System.out.println(new BusCurrentInfoServiceImpl().getBusCurrentInfo("141","1"));
+//        System.out.println(new BusCurrentInfoServiceImpl().getBusCurrentInfo("141","1"));
+        String result = "红牌楼站, 1, 广福桥街口站,2, 高升桥东路站, 3, 肖家河站, 4, 高升桥东路北站, 5, 一环路南四段站, 6, 地铁衣冠庙站, 7, 九如村站, 8, 一环路南二段站, 9, 地铁磨子桥站, 10, 地铁新南门站, 11, 红星路四段站, 12, 纱帽街站, 13, 芷泉街站, 14, 2辆, 牛王庙路口站, 15, 水碾河站, 16, 水碾河路站, 17, 双桥子站, 18, 塔子山公园站, 19, 五桂桥公交站（下客）, 20";
+        List<String> list = Lists.newArrayList(Splitter.on(",").split(result));
+        Map<String, String> map = new LinkedHashMap<>();
+        String resultMsg = "";
+        for (int i = 0; i < list.size() -1;) {
+            if (list.get(i).contains("辆")){
+                resultMsg = list.get(i);
+                i++;
+                continue;
+            }
+            map.put(list.get(i+1),list.get(i)+resultMsg);
+            resultMsg = "";
+            i+=2;
+        }
+        System.out.println(map);
     }
 }

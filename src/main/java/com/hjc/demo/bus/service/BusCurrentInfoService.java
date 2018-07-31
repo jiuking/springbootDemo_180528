@@ -13,9 +13,10 @@ import java.util.List;
 public interface BusCurrentInfoService {
     /**
      * 获取公交实时信息
+     *
      * @param busNo
      * @param lineType
      * @return
      */
-    List<BusEntity> getBusCurrentInfo(String busNo, String lineType) throws IOException;
+    BusEntity getBusCurrentInfo(String busNo, String lineType) throws IOException;
 }
