@@ -42,7 +42,7 @@ public class BusCurrentInfoServiceImpl implements BusCurrentInfoService {
         StringBuilder url = new StringBuilder();
         StringBuilder resultMsg_ = new StringBuilder();
         StringBuilder resultMsg_temp = new StringBuilder();
-        url.append("http://m.basbus.cn/ssgj/m_search?").append("id=").append(busNo).append("&linetype=").append(lineType);
+        url.append(URL).append("id=").append(busNo).append("&linetype=").append(lineType);
 
         logger.info("url:" + url.toString());
 
@@ -94,10 +94,9 @@ public class BusCurrentInfoServiceImpl implements BusCurrentInfoService {
         List<String> list = Lists.newArrayList(Splitter.on(" ").split(allBusLine));
         System.out.println("list:"+list);
         String resltMsg = "";
-        BusEntity busEntity = new BusEntity();
         List nodeList = new ArrayList();
-        for (int i = 0; i < allBusLine.length() - 1;) {
-            BusEntity.Node busEntityNode = new BusEntity().new Node();
+        for (int i = 0; i < list.size() - 1;) {
+            BusEntity.Node busEntityNode = resultBus.new Node();
             if (list.get(i).contains("辆")){
                 i++;
                 resltMsg = list.get(i);
@@ -109,7 +108,7 @@ public class BusCurrentInfoServiceImpl implements BusCurrentInfoService {
             i+=2;
             nodeList.add(busEntityNode);
         }
-        busEntity.setBusStands(nodeList);
+        resultBus.setBusStands(nodeList);
     }
 
     /**
@@ -130,7 +129,7 @@ public class BusCurrentInfoServiceImpl implements BusCurrentInfoService {
                 resultMsg_temp = "到达该站点";
             }
             for (BusEntity.Node nodes : resultBus.getBusStands()) {
-                if (nodes.getNodeName().contains(parent.text())){
+                if (parent.text().contains(nodes.getNodeName())){
                     nodes.setMsg(resultMsg_temp);
                 }
             }

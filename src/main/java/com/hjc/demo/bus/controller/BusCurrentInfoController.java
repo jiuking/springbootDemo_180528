@@ -33,7 +33,7 @@ public class BusCurrentInfoController {
     @RequestMapping("/concrete")
     @ResponseBody
     public Object concrete(String busNo,String lineType) {
-        List<BusEntity> result;
+        BusEntity result;
         try {
             result = busCurrentInfoService.getBusCurrentInfo(busNo, lineType);
         } catch (Exception e) {
