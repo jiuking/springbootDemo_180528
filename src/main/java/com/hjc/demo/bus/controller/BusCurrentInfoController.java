@@ -42,4 +42,9 @@ public class BusCurrentInfoController {
         }
         return result;
     }
+
+    @RequestMapping("redirect")
+    public String redirect() {
+        return "redirect:http://www.baidu.com";
+    }
 }

@@ -22,7 +22,7 @@ import java.io.IOException;
  * @date : 2018/6/1 0001 15:28
  * @description : Jwt Filter过滤请求路径
  */
-//@WebFilter(urlPatterns = {"/*"})
+@WebFilter(urlPatterns = {"/*"})
 public class JwtFilter implements Filter {
 
     @Autowired
@@ -70,6 +70,7 @@ public class JwtFilter implements Filter {
             }
             final String token = authHeader.substring(7);
             try {
+                //从application.yml 获取对象初始化实例
                 if (audience == null) {
                     BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(req.getServletContext());
                     audience = (Audience) factory.getBean("audience");

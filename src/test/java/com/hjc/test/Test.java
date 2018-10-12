@@ -10,5 +10,6 @@ public class Test {
         double a = 0.015;
         int sum = 140000;
         System.out.println(sum * a);
+        System.out.println(System.currentTimeMillis());
     }
 }
